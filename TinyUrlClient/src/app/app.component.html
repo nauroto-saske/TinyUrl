@@ -1,0 +1,88 @@
+<div class="container">
+  <header>
+    <h1>{{ title }}</h1>
+    <p class="subtitle">Shorten your URLs instantly</p>
+  </header>
+ 
+  <!-- Message Alert -->
+  <div *ngIf="message" class="alert" [class.alert-success]="messageType === 'success'" [class.alert-error]="messageType === 'error'">
+    {{ message }}
+  </div>
+ 
+  <!-- URL Input Form -->
+  <div class="card">
+    <h2>Create Short URL</h2>
+    <div class="form-group">
+      <input
+        type="text"
+        [(ngModel)]="originalUrl"
+        placeholder="Enter URL to shorten"
+        class="input-field"
+        (keyup.enter)="generateUrl()"
+      />
+      <div class="checkbox-group">
+        <label>
+          <input type="checkbox" [(ngModel)]="isPrivate" />
+          Private URL
+        </label>
+      </div>
+      <button class="btn btn-primary" (click)="generateUrl()" [disabled]="loading">
+        {{ loading ? 'Generating...' : 'Generate' }}
+      </button>
+    </div>
+  </div>
+ 
+  <!-- Search and Filter -->
+  <div class="card">
+    <h2>Public URLs</h2>
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search URLs..."
+        class="input-field"
+        (keyup.enter)="searchUrls()"
+      />
+      <button class="btn btn-secondary" (click)="searchUrls()" [disabled]="loading">
+        Search
+      </button>
+      <button class="btn btn-tertiary" (click)="clearSearch()" [disabled]="loading">
+        Clear
+      </button>
+    </div>
+  </div>
+ 
+  <!-- URL List -->
+  <div class="url-list">
+    <div *ngIf="loading" class="loading">Loading...</div>
+    
+    <div *ngIf="!loading && urls.length === 0" class="no-urls">
+      No URLs found
+    </div>
+ 
+    <div *ngFor="let url of urls" class="url-item">
+      <div class="url-info">
+        <div class="url-header">
+          <a [href]="url.shortUrl" target="_blank" class="short-url">
+            {{ url.shortUrl }}
+          </a>
+          <span *ngIf="url.isPrivate" class="badge badge-private">Private</span>
+        </div>
+        <div class="original-url">{{ url.originalUrl }}</div>
+        <div class="url-meta">
+          <span class="clicks">{{ url.clicks }} clicks</span>
+          <span class="date">{{ url.createdAt | date:'short' }}</span>
+        </div>
+      </div>
+      <div class="url-actions">
+        <button class="btn btn-copy" (click)="copyUrl(url.shortUrl)" title="Copy to clipboard">
+          Copy
+        </button>
+        <button class="btn btn-delete" (click)="deleteUrl(url.shortCode)" title="Delete URL">
+          Delete
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+ 
