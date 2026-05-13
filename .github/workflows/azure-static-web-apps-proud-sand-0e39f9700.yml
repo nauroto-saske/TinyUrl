@@ -16,7 +16,7 @@ jobs:
     name: Build and Deploy Job
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
           lfs: false
@@ -28,8 +28,13 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_PROUD_SAND_0E39F9700 }}
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           action: "upload"
+
           app_location: "TinyUrlClient"
           api_location: ""
+
+          # IMPORTANT FIX (this is what was missing)
+          app_build_command: "npm run build"
+
           output_location: "dist/tiny-url"
 
   close_pull_request_job:
