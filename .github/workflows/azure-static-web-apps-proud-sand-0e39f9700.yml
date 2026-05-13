@@ -32,8 +32,7 @@ jobs:
           app_location: "TinyUrlClient"
           api_location: ""
 
-          # IMPORTANT FIX (this is what was missing)
-          app_build_command: "npm run build"
+          # IMPORTANT: REMOVE app_build_command completely
 
           output_location: "dist/tiny-url"
 
