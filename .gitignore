@@ -18,4 +18,9 @@ bin/
 obj/
 
 node_modules/
-dist/
+dist/# Terraform
+infrastructure/terraform.tfstate
+infrastructure/terraform.tfstate.backup
+infrastructure/.terraform/
+*.tfstate
+*.tfstate.*
